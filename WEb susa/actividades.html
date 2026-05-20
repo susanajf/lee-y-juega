@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades - Leo y Juega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* (Aquí traemos los estilos básicos que ya tenías) */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f4f7fe;
+            margin: 0;
+            padding: 20px 40px;
+            color: #334155;
+        }
+
+        /* ----- MENÚ SUPERIOR ----- */
+        .main-header {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo-text { font-size: 1.3rem; font-weight: 900; color: #2563eb; margin: 0; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: #64748b; font-weight: 700; font-size: 0.9rem; transition: color 0.2s ease; }
+        .nav-links a:hover { color: #2563eb; }
+        .nav-links a.active { color: #2563eb; } /* Actividades estará activo aquí */
+        .btn-start { background-color: #2563eb; color: #ffffff; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+
+        /* ----- ZONA DE ACTIVIDADES ----- */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border: 2px solid #f1f5f9;
+        }
+
+        .activity-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .activity-info h4 { margin: 0 0 10px 0; font-size: 1.1rem; color: #1e293b; }
+
+        .activity-buttons { display: flex; gap: 10px; }
+        
+        .btn-pdf, .btn-quiz {
+            border: none; padding: 10px 15px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; transition: transform 0.2s;
+        }
+        .btn-pdf { background: #e2e8f0; color: #475569; }
+        .btn-quiz { background: #8b5cf6; color: white; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3); }
+        .btn-pdf:hover, .btn-quiz:hover { transform: scale(1.05); }
+
+        /* ----- CAJA DEL QUIZ IA ----- */
+        .quiz-container {
+            background: white;
+            border: 3px dashed #8b5cf6;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 40px;
+            display: none; /* Oculto hasta que den clic */
+        }
+        /* ----- BOTONES PARA EL QUIZ (A, B, C) ----- */
+        .btn-opcion {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            color: #334155;
+            font-size: 1.5rem;
+            font-weight: 900;
+            padding: 10px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-opcion:hover {
+            background: #e0f2fe;
+            border-color: #3b82f6;
+            transform: scale(1.1);
+        }
+        /* ----- BOTONES PARA QUIZ DE 5 PREGUNTAS ----- */
+        .btn-opcion-larga {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            color: #334155;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left; /* Alineamos el texto a la izquierda */
+            transition: all 0.2s;
+            width: 100%;
+        }
+        
+        .btn-opcion-larga:hover {
+            background: #e0f2fe;
+            border-color: #3b82f6;
+            transform: translateX(10px); /* Se mueve un poquito a la derecha */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <span class="logo-icon">📖</span>
+            <h1 class="logo-text">Leo y Juega</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Inicio</a> <a href="actividades.html" class="active">Actividades</a> <a href="progreso.html">Progreso</a>
+            <a href="#">Padres</a>
+        </nav>
+        <div class="header-action">
+            <button class="btn-start">¡Comienza ahora! ⭐</button>
+        </div>
+    </header>
+
+    <h2 style="color: #8b5cf6; font-size: 2.2rem; margin-bottom: 5px;">📚 Mis Actividades de Lectura</h2>
+    <p style="color: #64748b; font-weight: 600; margin-bottom: 30px;">Selecciona un cuento, léelo con atención y luego responde el desafío de tu amigo robot.</p>
+
+    <div class="activities-grid">
+        
+        <div class="activity-card">
+            <div class="activity-thumb" style="background: #fee2e2;">🐺</div>
+            <div class="activity-info">
+                <h4>Caperucita Roja</h4>
+                <div class="activity-buttons">
+  
+                        <button class="btn-pdf" onclick="abrirPDF('caperucita.pdf')">📖 Leer PDF</button>
+                    
+                    <button class="btn-quiz" onclick="pedirQuizIA('Caperucita Roja', 'https://www.youtube.com/embed/Y2h0UOoG2_4?si=Dy0xfy-CHA59068w')">✨ Hacer Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-thumb" style="background: #fce7f3;">🐷</div>
+            <div class="activity-info">
+                <h4>Los Tres Cerditos</h4>
+                <div class="activity-buttons">
+                    
+                        <button class="btn-pdf" onclick="abrirPDF('cerditos.pdf')">📖 Leer PDF</button>
+                    
+                    <button class="btn-quiz" onclick="pedirQuizIA('Los Tres Cerditos', 'https://www.youtube.com/embed/WVX9l1txqDo?si=wY6if4zOj7AGWw_o')">✨ Hacer Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-thumb" style="background: #e0f2fe;">🦆</div>
+            <div class="activity-info">
+                <h4>El Patito Feo</h4>
+                <div class="activity-buttons">
+                    
+                        <button class="btn-pdf" onclick="abrirPDF('patito.pdf')">📖 Leer PDF</button>
+                    
+                    <button class="btn-quiz" onclick="pedirQuizIA('El Patito Feo', 'https://www.youtube.com/embed/MWHxZhoDGhE?si=yDp6DNQViEKggHod')">✨ Hacer Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-thumb" style="background: #fef3c7;">🪵</div>
+            <div class="activity-info">
+                <h4>Pinocho</h4>
+                <div class="activity-buttons">
+                    
+                        <button class="btn-pdf" onclick="abrirPDF('pinocho.pdf')">📖 Leer PDF</button>
+                   
+                    <button class="btn-quiz" onclick="pedirQuizIA('Pinocho', 'https://www.youtube.com/embed/Ao295iSXIvk?si=_fmnPsT-OMnThsFp')">✨ Hacer Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-thumb" style="background: #fef08a;">🐻</div>
+            <div class="activity-info">
+                <h4>Ricitos de Oro y los 3 Osos</h4>
+                <div class="activity-buttons">
+                    
+                        <button class="btn-pdf" onclick="abrirPDF('ricitos.pdf')">📖 Leer PDF</button>
+                    
+                    <button class="btn-quiz" onclick="pedirQuizIA('Ricitos de Oro y los tres osos', 'https://www.youtube.com/embed/JjQueU5HQJI?si=P-iEENVhCg1e7a1N')">✨ Hacer Quiz</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="zona-quiz" class="quiz-container">
+        <h3 style="color: #8b5cf6; margin-top: 0;">🤖 Desafío de la Inteligencia Artificial</h3>
+        <div id="contenido-ia" style="font-size: 1.1rem; color: #334155;">
+            </div>
+    </div>
+
+    <div id="modal-pdf" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(5px);">
+        
+        <div style="width: 90%; max-width: 900px; display: flex; justify-content: flex-end; margin-bottom: 15px;">
+            <button onclick="cerrarPDF()" style="background: #ef4444; color: white; border: 4px solid #b91c1c; padding: 10px 25px; border-radius: 20px; font-weight: 900; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                ❌ Cerrar Libro
+            </button>
+        </div>
+
+        <iframe id="marco-pdf" src="" style="width: 90%; max-width: 900px; height: 75vh; border: 5px solid white; border-radius: 20px; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></iframe>
+        
+    </div>
+
+<script>
+    // -------------------------------------------
+        // FUNCIONES PARA ABRIR Y CERRAR EL LIBRO
+        // -------------------------------------------
+        window.abrirPDF = function(rutaDelArchivo) {
+            const modal = document.getElementById('modal-pdf');
+            const marco = document.getElementById('marco-pdf');
+            
+            // Le decimos al marco qué archivo cargar
+            marco.src = rutaDelArchivo;
+            
+            // Cambiamos el display a 'flex' para que aparezca centrado
+            modal.style.display = 'flex';
+        }
+
+        window.cerrarPDF = function() {
+            const modal = document.getElementById('modal-pdf');
+            const marco = document.getElementById('marco-pdf');
+            
+            // Escondemos la ventana
+            modal.style.display = 'none';
+            
+            // Borramos la ruta para que no siga cargando de fondo
+            marco.src = "";
+        }
+        // ⚠️ PEGA TU LLAVE REAL AQUÍ
+        const GEMINI_API_KEY = "AIzaSyBsRs3Zlze5bdBy6UWqAunJJZtXgDOQ5EY"; 
+
+        // Variables para controlar el juego
+        let quizActual = [];
+        let indicePregunta = 0;
+        let puntaje = 0;
+        let videoPremioActual = "";
+
+        async function pedirQuizIA(nombreDelCuento) {
+            const zonaQuiz = document.getElementById('zona-quiz');
+            const contenidoIA = document.getElementById('contenido-ia');
+            
+            zonaQuiz.style.display = 'block';
+            contenidoIA.innerHTML = "<p>⏳ ¡Leyendo el cuento súper rápido y preparando 5 desafíos mágicos para ti! 🤖</p>";
+
+            // Instrucción estricta para que Gemini devuelva datos organizados (JSON)
+            const instruccion = `Eres un profesor experto en pedagogía infantil. Crea un quiz de 5 preguntas de comprensión lectora sobre la versión tradicional infantil y apta para niños de 6 años del cuento clásico "${nombreDelCuento}".
+            
+            IMPORTANTE: Devuelve ÚNICAMENTE un texto en formato JSON válido. Debe ser un arreglo de 5 objetos exactos con esta estructura:
+            [
+              {
+                "pregunta": "¿A quién iba a visitar Caperucita?",
+                "opcionA": "A su tía",
+                "opcionB": "A su abuelita",
+                "opcionC": "A su mamá",
+                "correcta": "B",
+                "retroalimentacion": "¡Exacto! Caperucita llevaba una canasta con comida para su abuelita que estaba enferma."
+              }
+            ]
+            No incluyas saludos ni formato markdown adicional, SOLO el arreglo JSON.`;
+
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                
+                const respuesta = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: instruccion }] }] })
+                });
+
+                if (!respuesta.ok) throw new Error("Error en la conexión");
+
+                const datos = await respuesta.json();
+                let textoIA = datos.candidates[0].content.parts[0].text;
+
+                // Limpiamos el texto por si la IA le pone comillas raras y lo convertimos a datos reales
+                textoIA = textoIA.replace(/```json/g, '').replace(/```/g, '').trim();
+                quizActual = JSON.parse(textoIA); 
+                
+                // Reiniciamos los marcadores
+                indicePregunta = 0;
+                puntaje = 0;
+                
+                // Mostramos la primera pregunta
+                mostrarPreguntaActual();
+
+            } catch (error) {
+                contenidoIA.innerHTML = "<p>¡Uy! Mi conexión falló. ¿Revisaste si tu llave secreta está bien? 🤖</p>";
+                console.error(error);
+            }
+        }
+
+        // Función para mostrar la pregunta 1 por 1
+        function mostrarPreguntaActual() {
+            const contenidoIA = document.getElementById('contenido-ia');
+
+            // Si ya respondimos las 5, mostramos el diploma final
+            // Si ya respondimos las 5, mostramos el diploma final y el video
+            if (indicePregunta >= quizActual.length) {
+                
+                let puntosGanados = puntaje * 5; 
+                let progresoAnterior = parseInt(localStorage.getItem('progresoNiño')) || 0;
+                let progresoTotal = progresoAnterior + puntosGanados;
+                
+                if(progresoTotal > 100) { progresoTotal = 100; }
+                localStorage.setItem('progresoNiño', progresoTotal);
+
+                // 🌟 REPRODUCTOR INCRUSTADO (YouTube)
+                let reproductorVideo = "";
+                if(videoPremioActual) {
+                    reproductorVideo = `
+                        <div style="margin-top: 20px; border-radius: 15px; overflow: hidden; border: 4px solid #8b5cf6;">
+                            <iframe width="100%" height="315" src="${videoPremioActual}" title="Video Sorpresa" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    `;
+                }
+
+                contenidoIA.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h2 style="color: #10b981; font-size: 2.5rem; margin: 0;">¡Reto Superado! 🎉</h2>
+                        <p style="font-size: 1.3rem; font-weight: 800; color: #334155;">Acertaste ${puntaje} de 5 preguntas.</p>
+                        <p style="color: #8b5cf6; font-weight: 900; font-size: 1.2rem;">¡Ganaste un ${puntosGanados}% de progreso y este video sorpresa!</p>
+                        
+                        ${reproductorVideo}
+                        
+                        <a href="index.html" style="text-decoration: none; display: inline-block; margin-top: 25px;">
+                            <button class="btn-start" style="font-size: 1.2rem; padding: 15px 30px; background: #10b981;">Recoger mis puntos y salir 🏆</button>
+                        </a>
+                    </div>`;
+                return;
+            }
+
+            // Si aún hay preguntas, dibujamos la actual
+            const p = quizActual[indicePregunta];
+            
+            contenidoIA.innerHTML = `
+                <p style="font-weight: 900; color: #8b5cf6; background: #f5f3ff; padding: 5px 15px; border-radius: 20px; display: inline-block;">Pregunta ${indicePregunta + 1} de 5</p>
+                
+                <h3 style="font-family: 'Nunito', sans-serif; color: #334155; font-size: 1.3rem;">${p.pregunta}</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;" id="caja-botones">
+                   <button class="btn-opcion-larga" onclick="evaluar('A')">A) ${p.opcionA}</button>
+        <button class="btn-opcion-larga" onclick="evaluar('B')">B) ${p.opcionB}</button>
+        <button class="btn-opcion-larga" onclick="evaluar('C')">C) ${p.opcionC}</button>
+                </div>
+
+                <div id="mensaje-retro" style="margin-top: 25px; padding: 15px; border-radius: 15px; font-weight: 700; display: none;"></div>
+                
+                <div style="text-align: right; margin-top: 20px;">
+                    <button id="btn-siguiente" class="btn-start" style="display: none;" onclick="avanzar()">Siguiente ➡️</button>
+                </div>
+            `;
+        }
+
+        // Función que evalúa lo que el niño presionó
+        window.evaluar = function(elegida) {
+            // Sacamos la respuesta y la explicación directamente de la memoria del robot
+            const p = quizActual[indicePregunta];
+            const correcta = p.correcta;
+            const explicacion = p.retroalimentacion;
+
+            const mensaje = document.getElementById('mensaje-retro');
+            const btnSiguiente = document.getElementById('btn-siguiente');
+            const botones = document.querySelectorAll('.btn-opcion-larga');
+
+            // Desactivamos los botones para que no haga clic varias veces
+            botones.forEach(btn => btn.style.pointerEvents = 'none');
+
+            mensaje.style.display = 'block';
+
+            if(elegida === correcta) {
+                puntaje++;
+                mensaje.style.backgroundColor = '#dcfce7'; // Verde clarito
+                mensaje.style.color = '#15803d'; // Verde oscuro
+                mensaje.innerHTML = `🌟 <strong>¡Súper bien!</strong> ${explicacion}`;
+            } else {
+                mensaje.style.backgroundColor = '#fee2e2'; // Rojo clarito
+                mensaje.style.color = '#b91c1c'; // Rojo oscuro
+                mensaje.innerHTML = `💡 <strong>Casi, casi...</strong> La respuesta era la <strong>${correcta}</strong> porque: ${explicacion}`;
+            }
+
+            btnSiguiente.style.display = 'inline-block';
+        }
+
+        // Función para ir a la siguiente
+        window.avanzar = function() {
+            indicePregunta++;
+            mostrarPreguntaActual();
+        }
+    </script>
+
+</body>
+</html>
