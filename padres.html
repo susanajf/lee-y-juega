@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progreso - Leo y Juega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+        /* Menú de navegación */
+        .menu-superior {
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu-enlaces a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 800;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .menu-enlaces a:hover {
+            color: #8b5cf6;
+        }
+
+        .menu-enlaces a.activo {
+            color: #3b82f6;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 5px;
+        }
+
+        /* Contenedor del panel */
+        .dashboard-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Tarjetas del panel */
+        .panel-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 2px solid #f1f5f9;
+        }
+
+        .panel-title {
+            color: #1e3a8a;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Lista de logros */
+        .logro-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 15px;
+        }
+
+        /* Botones interactivos para los padres */
+        .btn-padre {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .btn-padre:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-si { background: #22c55e; color: white; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2); }
+        .btn-no { background: #f43f5e; color: white; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
+
+        /* Mensaje de retroalimentación oculto */
+        #mensaje-feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #334155;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="menu-superior">
+        <div style="font-size: 1.5rem; font-weight: 900; color: #3b82f6;">📖 Leo y Juega</div>
+        <div class="menu-enlaces">
+            <a href="index.html">Inicio</a>
+            <a href="actividades.html">Actividades</a>
+            <a href="progreso.html" class="activo">Progreso</a>
+        </div>
+    </nav>
+
+    <div style="text-align: center; margin-top: 40px; padding: 0 20px;">
+        <h1 style="color: #8b5cf6; font-size: 2.5rem; margin-bottom: 5px;">Rincón para Familias 👨‍👩‍👧</h1>
+        <p style="color: #64748b; font-size: 1.1rem;">Acompaña a tu pequeño explorador en su aventura de leer.</p>
+    </div>
+
+    <div class="dashboard-container">
+        
+        <div class="panel-card">
+            <h2 class="panel-title">🏆 Hoy en su aventura...</h2>
+            
+            <div class="logro-item">
+                <span style="font-size: 2rem;">🧩</span>
+                <div>
+                    <h4 style="margin: 0; color: #334155;">Unió sonidos</h4>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #64748b;">Practicó con la familia de la M y la S.</p>
+                </div>
+            </div>
+
+            <div class="logro-item" style="background: #fffbeb;">
+                <span style="font-size: 2rem;">🏰</span>
+                <div>
+                    <h4 style="margin: 0; color: #334155;">Cofre de las Palabras</h4>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #64748b;">Descubrió los tesoros: Castillo, Bosque, Dragón y Princesa.</p>
+                </div>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #94a3b8; text-align: center; margin-top: 20px;">
+                💡 La IA indica un progreso excelente en conciencia fonológica.
+            </p>
+        </div>
+
+        <div class="panel-card">
+            <h2 class="panel-title">💬 Charla en casa</h2>
+            <p style="color: #475569; margin-bottom: 25px;">
+                Contar lo que aprenden fortalece su memoria y vocabulario. ¿Tu hijo te habló hoy sobre el Dragón o la Princesa que descubrió en su misión?
+            </p>
+
+            <button class="btn-padre btn-si" onclick="mostrarFeedback('si')">¡Sí, me lo contó emocionado! 🎉</button>
+            <button class="btn-padre btn-no" onclick="mostrarFeedback('no')">Aún no me ha contado 🤫</button>
+
+            <div id="mensaje-feedback"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function mostrarFeedback(respuesta) {
+            const cuadroMensaje = document.getElementById('mensaje-feedback');
+            cuadroMensaje.style.display = 'block';
+
+            if (respuesta === 'si') {
+                cuadroMensaje.style.backgroundColor = '#dcfce7'; // Verde clarito
+                cuadroMensaje.style.border = '2px solid #86efac';
+                cuadroMensaje.innerHTML = `
+                    <span style="font-size: 1.5rem;">🌟</span> <strong>¡Excelente trabajo en equipo!</strong> <br><br>
+                    Cuando los niños verbalizan lo que leen, estructuran mejor su pensamiento. <br><br>
+                    <strong>Siguiente paso:</strong> Pídele que te dibuje el castillo y escriba su nombre debajo como pueda. ¡Celebra cada intento!
+                `;
+            } else {
+                cuadroMensaje.style.backgroundColor = '#fef2f2'; // Rojo clarito
+                cuadroMensaje.style.border = '2px solid #fca5a5';
+                cuadroMensaje.innerHTML = `
+                    <span style="font-size: 1.5rem;">💡</span> <strong>¡Momento de ser detectives!</strong> <br><br>
+                    Es súper normal. A veces necesitan un pequeño empujón para recordar.<br><br>
+                    <strong>Tip para hoy:</strong> Pregúntale de forma misteriosa: <em>"Oye, me enteré que abriste un regalo mágico hoy en el computador... ¿Qué había adentro?"</em>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

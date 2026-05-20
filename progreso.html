@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Progreso - Leo y Juega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8fafc; /* El mismo fondo clarito de tus otras páginas */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo para el menú de navegación */
+        .menu-superior {
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu-enlaces a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 800;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .menu-enlaces a:hover {
+            color: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="menu-superior">
+        <div style="font-size: 1.5rem; font-weight: 900; color: #3b82f6;">📖 Leo y Juega</div>
+        <div class="menu-enlaces">
+            <a href="index.html">Inicio</a>
+            <a href="actividades.html">Actividades</a>
+            <a href="progreso.html" style="color: #8b5cf6;">Progreso</a>
+        </div>
+    </nav>
+
+    <div style="max-width: 800px; margin: 40px auto; text-align: center; padding: 0 20px;">
+        
+        <h1 style="color: #8b5cf6; font-size: 2.8rem; margin-bottom: 5px;">¡Tu Ruta de Aprendizaje! 🚀</h1>
+        <p style="color: #64748b; font-size: 1.3rem; font-weight: 700;">Cada cuento que lees hace que tu cerebro sea más fuerte.</p>
+
+        <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
+                <h2 style="color: #10b981; font-size: 1.8rem; margin: 0;">Tu Energía Lectora ⚡</h2>
+                <span id="texto-porcentaje-gigante" style="font-weight: 900; font-size: 2rem; color: #334155;">0%</span>
+            </div>
+            
+            <div style="background: #f1f5f9; height: 40px; border-radius: 20px; overflow: hidden; border: 4px solid #e2e8f0; box-shadow: inset 0 4px 6px rgba(0,0,0,0.05);">
+                <div id="barra-progreso-gigante" style="background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b); height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 15px;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <h3 style="color: #f59e0b; font-size: 2rem; margin-bottom: 30px;">Tus Medallas Desbloqueadas 🏆</h3>
+            
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                
+                <div id="medalla-bronce" style="filter: grayscale(100%); opacity: 0.5; transition: all 0.8s; text-align: center; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 150px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">🥉</div>
+                    <p style="font-weight: 800; color: #475569; margin: 0;">Aprendiz</p>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 5px 0 0 0;">Llega al 25%</p>
+                </div>
+
+                <div id="medalla-plata" style="filter: grayscale(100%); opacity: 0.5; transition: all 0.8s; text-align: center; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 150px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">🥈</div>
+                    <p style="font-weight: 800; color: #475569; margin: 0;">Aventurero</p>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 5px 0 0 0;">Llega al 50%</p>
+                </div>
+
+                <div id="medalla-oro" style="filter: grayscale(100%); opacity: 0.5; transition: all 0.8s; text-align: center; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 150px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">🥇</div>
+                    <p style="font-weight: 800; color: #475569; margin: 0;">Maestro</p>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 5px 0 0 0;">Llega al 100%</p>
+                </div>
+
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px; margin-bottom: 40px;">
+        <a href="ninos.html" style="background: linear-gradient(135deg, #a855f7, #c084fc); color: white; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-size: 1.3rem; font-weight: 800; box-shadow: 0 8px 15px rgba(168, 85, 247, 0.3); display: inline-block; transition: transform 0.2s;">
+            🎤 ¡Cuéntanos cómo te fue hoy!
+        </a>
+    </div>
+        
+    </div>
+
+    <script>
+        // Esperamos a que la página cargue para hacer la animación
+        window.onload = function() {
+            
+            // 1. Leemos el progreso guardado
+            let progresoActual = parseInt(localStorage.getItem('progresoNiño')) || 0;
+            
+            // 2. Buscamos los elementos en la pantalla
+            const barra = document.getElementById('barra-progreso-gigante');
+            const texto = document.getElementById('texto-porcentaje-gigante');
+            
+            const medallaBronce = document.getElementById('medalla-bronce');
+            const medallaPlata = document.getElementById('medalla-plata');
+            const medallaOro = document.getElementById('medalla-oro');
+
+            // 3. Hacemos la animación de la barra
+            setTimeout(() => {
+                barra.style.width = progresoActual + '%';
+                texto.innerHTML = progresoActual + '%';
+
+                // 4. Lógica de gamificación: Encender medallas
+                if(progresoActual >= 25) {
+                    medallaBronce.style.filter = 'grayscale(0%)';
+                    medallaBronce.style.opacity = '1';
+                    medallaBronce.style.transform = 'translateY(-10px)';
+                    medallaBronce.style.border = '2px solid #fbbf24';
+                }
+                
+                if(progresoActual >= 50) {
+                    medallaPlata.style.filter = 'grayscale(0%)';
+                    medallaPlata.style.opacity = '1';
+                    medallaPlata.style.transform = 'translateY(-10px)';
+                    medallaPlata.style.border = '2px solid #94a3b8';
+                }
+                
+                if(progresoActual >= 100) {
+                    medallaOro.style.filter = 'grayscale(0%)';
+                    medallaOro.style.opacity = '1';
+                    medallaOro.style.transform = 'translateY(-15px) scale(1.1)';
+                    medallaOro.style.border = '3px solid #fbbf24';
+                    medallaOro.style.boxShadow = '0 10px 25px rgba(251, 191, 36, 0.4)';
+                }
+
+            }, 400); 
+        };
+    </script>
+</body>
+</html>
