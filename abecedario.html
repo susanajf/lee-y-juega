@@ -92,6 +92,18 @@
 
     <div id="contenedor-letras" class="letter-grid"></div>
 
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 50px; padding-bottom: 40px; flex-wrap: wrap;">
+    
+    <a href="index.html" style="background: #94a3b8; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px;">
+        🏠 Volver al Inicio
+    </a>
+
+    <a href="silabas.html" onclick="ganarEstrella('visito_silabas');" style="background: #10b981; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px;">
+        Siguiente: Sílabas ➡️
+    </a>
+
+</div>
+
     <script>
         // 1. La lista de todas las letras
         const abecedario = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
@@ -135,5 +147,29 @@
             window.speechSynthesis.speak(voz);
         }
     </script>
+
+    <script>
+    function ganarEstrella(idActividad) {
+        // 1. Sacamos la lista secreta de la memoria
+        let listaCompletadas = JSON.parse(localStorage.getItem('misionesCompletadas')) || [];
+
+        // 2. Si ya visitó sílabas antes (desde el index o desde aquí), cancelamos el premio
+        if (listaCompletadas.includes(idActividad)) {
+            return; 
+        }
+
+        // 3. Si es nueva, le sumamos 1 estrella
+        let estrellasActuales = parseInt(localStorage.getItem('estrellasExplorador')) || 0;
+        estrellasActuales += 1;
+        localStorage.setItem('estrellasExplorador', estrellasActuales);
+        
+        // Anotamos la misión para que no la repita
+        listaCompletadas.push(idActividad);
+        localStorage.setItem('misionesCompletadas', JSON.stringify(listaCompletadas));
+
+        // Le avisamos al niño
+        alert("¡Genial! 🌟 Ganaste una estrella por avanzar a las Sílabas.");
+    }
+</script>
 </body>
 </html>

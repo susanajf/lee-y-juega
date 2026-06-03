@@ -635,7 +635,48 @@
     </style>
 </head>
 <body>
+<div id="pantalla-registro" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.9); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+        <div style="background: white; padding: 40px; border-radius: 30px; text-align: center; max-width: 450px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: aparecer 0.5s ease-out;">
+            <h1 style="color: #8b5cf6; font-size: 2.2rem; margin-top: 0;">¡Hola, Explorador! 🗺️</h1>
+            <p style="color: #64748b; font-size: 1.2rem; font-weight: 700; margin-bottom: 25px;">Para empezar la aventura, dinos cómo te llamas y elige a tu compañero.</p>
+            
+            <input type="text" id="input-nombre" placeholder="Tu nombre aquí" style="width: 80%; padding: 15px; border: 3px solid #e2e8f0; border-radius: 15px; font-size: 1.5rem; font-family: 'Nunito', sans-serif; text-align: center; font-weight: bold; color: #334155; margin-bottom: 25px; outline: none;">
+            
+            <h3 style="color: #3b82f6; margin-bottom: 15px;">Elige tu avatar:</h3>
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                <button class="btn-avatar" onclick="seleccionarAvatar('🦁', this)" style="font-size: 3rem; background: none; border: 4px solid transparent; border-radius: 20px; cursor: pointer; transition: transform 0.2s;">🦁</button>
+                <button class="btn-avatar" onclick="seleccionarAvatar('🦊', this)" style="font-size: 3rem; background: none; border: 4px solid transparent; border-radius: 20px; cursor: pointer; transition: transform 0.2s;">🦊</button>
+                <button class="btn-avatar" onclick="seleccionarAvatar('🐸', this)" style="font-size: 3rem; background: none; border: 4px solid transparent; border-radius: 20px; cursor: pointer; transition: transform 0.2s;">🐸</button>
+            </div>
 
+            <button onclick="guardarExplorador()" style="background: #10b981; color: white; border: none; padding: 15px 40px; font-size: 1.3rem; font-weight: 900; border-radius: 30px; cursor: pointer; width: 100%; box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3);">¡Comenzar! 🚀</button>
+        </div>
+    </div>
+
+<!-- Mensaje de bienvenida personalizado (Corregido el espacio) -->
+  <!-- Mensaje de bienvenida y MEDALLERO -->
+    <div id="saludo-personalizado" style="display: none; text-align: center; margin-top: 10px; margin-bottom: 20px; padding: 0 20px;">
+        <h2 style="color: #f59e0b; font-size: 2.2rem; margin-top: 0; margin-bottom: 5px;">¡Qué bueno verte, <span id="nombre-display"></span>! <span id="avatar-display"></span></h2>
+        
+        <!-- El Medallero (Alcancía) -->
+        <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 20px; display: inline-block; padding: 8px 20px; margin-top: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <span style="font-size: 1.5rem; color: #d97706; font-weight: 800;">Mis Estrellas: </span>
+            <span id="contador-estrellas" style="font-size: 1.8rem; font-weight: 900; color: #fbbf24;">0</span>
+            <span style="font-size: 1.8rem;">⭐</span>
+        </div>
+    </div>
+
+    <style>
+        @keyframes aparecer {
+            from { opacity: 0; transform: scale(0.8) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .avatar-seleccionado {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+            transform: scale(1.1);
+        }
+    </style>
     <!-- CABECERA -->
  <header class="main-header">
         
@@ -677,9 +718,20 @@
                 Descubre letras, sílabas, palabras y cuentos con actividades divertidas y ayuda de la <strong>IA</strong>.
             </p>
             
-           <button onclick="actividades.html" class="btn-green" style="background: #22c55e; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.4);">
-  ¡Quiero aprender! ►
-</button>
+           
+            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; align-items: center;">
+    
+    <a href="abecedario.html" class="boton-verde" style="background: #10b981; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">¡Quiero aprender! ►</a>
+
+    <button onclick="reproducirGuiaVirtual()" style="background: #3b82f6; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; display: flex; align-items: center; gap: 8px;">
+        🤖 Escuchar ruta
+    </button>
+
+    <button onclick="abrirGuiaDocente()" style="background: #f59e0b; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; display: flex; align-items: center; gap: 8px;">
+        📖 Guía profes y papás
+    </button>
+
+</div>
         </div>
         
     </section>
@@ -694,7 +746,7 @@
                 <h2 class="section-title">⭐ Explora y aprende</h2>
                <div class="categories-grid" style="display: flex; gap: 15px; justify-content: space-between; overflow-x: auto; padding-bottom: 10px;">
                 
-                <a href="abecedario.html" style="text-decoration: none; color: inherit;">
+                <a href="abecedario.html" style="text-decoration: none; color: inherit;" onclick="ganarEstrella('visito_letras');">
     <div class="card"> 
         <img src="img-letras.png" alt="Aprende las letras" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 2px solid #f1f5f9;">
         <h3 style="margin: 5px 0; font-size: 1.2rem; color: #334155;">Letras</h3>
@@ -702,7 +754,7 @@
     </div>
 </a>
 
-<a href="silabas.html" style="text-decoration: none; color: inherit;">
+<a href="silabas.html" style="text-decoration: none; color: inherit;" onclick="ganarEstrella('visito_silabas');"> 
     <div class="card">
         <img src="silabas.jpeg" alt="Aprende las sílabas" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 2px solid #f1f5f9;">
         <h3 style="margin: 5px 0; font-size: 1.2rem; color: #334155;">Sílabas</h3>
@@ -710,7 +762,7 @@
     </div>
 </a>
 
-                <a href="palabras.html" style="text-decoration: none; color: inherit;">
+                <a href="palabras.html" style="text-decoration: none; color: inherit;" onclick="ganarEstrella('visito_palabras');">
     <div class="card">
         <img src="palabras.jpeg" alt="Aprende palabras completas" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 2px solid #f1f5f9;">
         <h3 style="margin: 5px 0; font-size: 1.2rem; color: #334155;">Palabras</h3>
@@ -718,7 +770,7 @@
     </div>
 </a>
 
-<a href="actividades.html" style="text-decoration: none; color: inherit;">
+<a href="actividades.html" style="text-decoration: none; color: inherit;" onclick="ganarEstrella('visito_cuentos');">
     <div class="card">
         <img src="cuentos.jpeg" alt="Escucha historias mágicas" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 2px solid #f1f5f9;">
         <h3 style="margin: 5px 0; font-size: 1.2rem; color: #334155;">Cuentos</h3>
@@ -726,7 +778,7 @@
     </div>
 </a>
 
-<a href="foneticos.html" style="text-decoration: none; color: inherit;">
+<a href="foneticos.html" style="text-decoration: none; color: inherit;" onclick="ganarEstrella('visito_juegos');">
     <div class="card">
         <img src="img-foneticos.jpeg" alt="Juegos de sonidos y pronunciación" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 2px solid #f1f5f9;">
         <h3 style="margin: 5px 0; font-size: 1.2rem; color: #334155;">Juegos fonéticos</h3>
@@ -927,11 +979,50 @@
     <div class="progress-bar-container">
         <div id="barra-verde" class="progress-bar-fill" style="width: 0%; transition: width 1s ease-in-out;"></div>
     </div>
+    <div style="margin-top: 25px; display: flex; gap: 15px; text-align: left; flex-wrap: wrap;">
+        
+        <div style="flex: 1; min-width: 150px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 2px solid #bbf7d0;">
+            <h4 style="margin-top: 0; color: #166534; font-size: 1.1rem;">✅ Logradas</h4>
+            <ul id="lista-realizadas" style="list-style: none; padding: 0; margin: 0; color: #15803d; font-size: 0.95rem; font-weight: bold; line-height: 1.8;">
+                </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px; background: #fffbeb; padding: 15px; border-radius: 12px; border: 2px solid #fde68a;">
+            <h4 style="margin-top: 0; color: #b45309; font-size: 1.1rem;">⏳ Por descubrir</h4>
+            <ul id="lista-pendientes" style="list-style: none; padding: 0; margin: 0; color: #b45309; font-size: 0.95rem; font-weight: bold; line-height: 1.8;">
+                </ul>
+        </div>
+
+    </div>
             </section>
 
         </div> <!-- Cierra Columna Derecha -->
 
     </div>
+    <div id="modal-guia-docente" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+    
+    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left;">
+        <h2 style="color: #3b82f6; margin-top: 0; font-size: 1.8rem;">📖 Ruta Pedagógica</h2>
+        
+        <p style="color: #475569; font-size: 1.05rem; line-height: 1.6;">
+            ¡Bienvenidos a <strong>Leo y Juega</strong>! Esta plataforma está diseñada bajo el modelo ADDIE para guiar a los niños en su alfabetización inicial de forma progresiva:
+        </p>
+        
+        <ul style="color: #334155; font-size: 1rem; line-height: 1.6; padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><strong>1. Letras y Sílabas:</strong> Reconocimiento fonético y visual para construir bases sólidas.</li>
+            <li style="margin-bottom: 8px;"><strong>2. Palabras:</strong> Lectura global y asociación de significados.</li>
+            <li style="margin-bottom: 8px;"><strong>3. Cuentos interactivos:</strong> Comprensión lectora apoyada por Inteligencia Artificial y gamificación.</li>
+        </ul>
+
+        <p style="color: #f59e0b; font-size: 0.95rem; font-weight: bold; background: #fffbeb; padding: 10px; border-radius: 8px;">
+            💡 Sugerencia: Acompañe al estudiante en este orden exacto y anímelo a reclamar sus estrellas al final de cada misión para mantener la motivación alta.
+        </p>
+        
+        <div style="text-align: center; margin-top: 25px;">
+            <button onclick="cerrarGuiaDocente()" style="background: #10b981; color: white; border: none; padding: 10px 25px; font-size: 1.1rem; border-radius: 25px; cursor: pointer; font-weight: bold;">¡Entendido!</button>
+        </div>
+    </div>
+</div>
 <script>
         document.addEventListener('DOMContentLoaded', () => {
             
@@ -1011,9 +1102,9 @@
             // MAGIA 2: CONEXIÓN REAL CON GEMINI
             // ==========================================
             const botonLeer = document.querySelector('.btn-read-story');
-            const mitad1 = "AIzaSyANct8QfgxL5Q7Q7KJaT";
-const mitad2 = "-lN8dnN1P9bbwQ";
-const GEMINI_API_KEY = mitad1 + mitad2;
+        const mitad1 = "AIzaSyANct8QfgxL5Q7Q7KJaT";
+        const mitad2 = "-lN8dnN1P9bbwQ";
+        const GEMINI_API_KEY = mitad1 + mitad2;
             
             if (botonLeer) {
                 botonLeer.addEventListener('click', async () => {
@@ -1146,11 +1237,31 @@ const GEMINI_API_KEY = mitad1 + mitad2;
                 window.speechSynthesis.speak(vozMagica);
             }, 500);
         }
+
+        // 1. Función para que el Robot explique la ruta (Guía Virtual)
+        function reproducirGuiaVirtual() {
+            // El texto que va a leer el navegador
+            let mensaje = "¡Hola, explorador! Bienvenido a Leo y Juega. Para empezar nuestra aventura, te recomiendo seguir este orden: primero entra a las Letras, luego une las Sílabas. Después forma Palabras completas, y al final, diviértete con los Cuentos mágicos y los juegos fonéticos. Recuerda reclamar tus estrellas en cada misión. ¡Tú puedes!";
+            
+            let voz = new SpeechSynthesisUtterance(mensaje);
+            voz.lang = 'es-CO'; // Acento para que suene claro
+            window.speechSynthesis.speak(voz);
+        }
+
+        // 2. Función para abrir la ventana de los profes
+        function abrirGuiaDocente() {
+            document.getElementById('modal-guia-docente').style.display = 'flex';
+        }
+
+        // 3. Función para cerrar la ventana de los profes
+        function cerrarGuiaDocente() {
+            document.getElementById('modal-guia-docente').style.display = 'none';
+        }
             
     </script>
 
 <script>
-        // Asegúrate de que esta sea tu llave exacta entre las comillas
+        // Asegúrate de que esta sea tu llave exacta entre las comillas 
         const pedacito1 = "AIzaSyANct8QfgxL5Q7Q7KJaT";
 const pedacito2 = "-lN8dnN1P9bbwQ";
 const CLAVE_IA = pedacito1 + pedacito2;
@@ -1167,7 +1278,11 @@ const CLAVE_IA = pedacito1 + pedacito2;
             btnGenerar.style.opacity = '0.7';
             btnLeer.style.display = 'none';
 
-            const prompt = "Escribe un cuento infantil muy corto, de máximo 70 palabras, para un niño de primer grado que está aprendiendo a leer. Usa vocabulario sencillo, palabras fáciles de pronunciar y oraciones cortas. No uses palabras complejas. Invéntate una historia nueva, amigable y diferente cada vez.";
+           // 1. Rescatamos el nombre de la memoria (si no hay, usamos "un explorador" por defecto)
+const nombreNino = localStorage.getItem('nombreExplorador') || 'un explorador';
+
+// 2. Insertamos el nombre directamente en las instrucciones para Gemini
+const prompt = `Escribe un cuento infantil muy corto, de  70 palabras a 100 palabras, para un niño de primer grado que está aprendiendo a leer. Usa vocabulario sencillo, palabras fáciles de pronunciar y oraciones cortas. El protagonista principal de la historia debe llamarse ${nombreNino}. Invéntate una historia nueva, amigable y diferente cada vez.`;
 
             try {
                 // Limpiamos espacios invisibles que se hayan copiado por error
@@ -1217,5 +1332,171 @@ const CLAVE_IA = pedacito1 + pedacito2;
             window.speechSynthesis.speak(voz);
         }
     </script>
+
+    <script>
+        let avatarElegido = '';
+
+        // 1. Cuando la página carga, revisamos la memoria
+        window.onload = function() {
+            verificarMemoriaLocal();
+        };
+
+        function verificarMemoriaLocal() {
+            // Buscamos si ya existe un nombre guardado
+            const nombreGuardado = localStorage.getItem('nombreExplorador');
+            const avatarGuardado = localStorage.getItem('avatarExplorador');
+
+            if (nombreGuardado) {
+                // Si el niño ya se registró antes, mostramos su saludo y ocultamos el registro
+                document.getElementById('pantalla-registro').style.display = 'none';
+                
+                document.getElementById('nombre-display').textContent = nombreGuardado.charAt(0).toUpperCase() + nombreGuardado.slice(1);
+                document.getElementById('avatar-display').textContent = avatarGuardado;
+                document.getElementById('saludo-personalizado').style.display = 'block';
+                
+                // Un pequeño saludo de voz opcional
+                setTimeout(() => {
+                    let voz = new SpeechSynthesisUtterance("Hola de nuevo, " + nombreGuardado);
+                    voz.lang = 'es-CO';
+                    window.speechSynthesis.speak(voz);
+                }, 1000);
+
+            } else {
+                // Si es la primera vez, mostramos la pantalla de registro
+                document.getElementById('pantalla-registro').style.display = 'flex';
+            }
+        }
+
+        function seleccionarAvatar(emoji, boton) {
+            avatarElegido = emoji;
+            // Quitamos la selección de todos los botones
+            let botones = document.getElementsByClassName('btn-avatar');
+            for(let i=0; i<botones.length; i++) {
+                botones[i].classList.remove('avatar-seleccionado');
+            }
+            // Marcamos el botón que tocó
+            boton.classList.add('avatar-seleccionado');
+        }
+
+        function guardarExplorador() {
+            const nombre = document.getElementById('input-nombre').value;
+            
+            if (nombre.trim() === '' || avatarElegido === '') {
+                alert('¡Por favor escribe tu nombre y elige un avatar!');
+                return;
+            }
+
+            // MAGIA: Guardamos en el disco duro del navegador
+            localStorage.setItem('nombreExplorador', nombre);
+            localStorage.setItem('avatarExplorador', avatarElegido);
+
+            // Refrescamos la pantalla para que lo salude
+            verificarMemoriaLocal();
+        }
+    </script>
+ <!-- ========================================== -->
+    <!-- CEREBRO DE ESTRELLAS Y AUDIO (Copia desde aquí) -->
+    <script>
+        function actualizarPantallaEstrellas() {
+            let estrellasGuardadas = localStorage.getItem('estrellasExplorador');
+            if (!estrellasGuardadas) estrellasGuardadas = 0;
+            
+            let contador = document.getElementById('contador-estrellas');
+            if (contador) contador.textContent = estrellasGuardadas;
+        }
+
+        function ganarEstrella(idActividad) {
+            let listaCompletadas = JSON.parse(localStorage.getItem('misionesCompletadas')) || [];
+
+            if (listaCompletadas.includes(idActividad)) {
+                return; 
+            }
+
+            let estrellasActuales = parseInt(localStorage.getItem('estrellasExplorador')) || 0;
+            estrellasActuales += 1;
+            localStorage.setItem('estrellasExplorador', estrellasActuales);
+            
+            listaCompletadas.push(idActividad);
+            localStorage.setItem('misionesCompletadas', JSON.stringify(listaCompletadas));
+
+            actualizarPantallaEstrellas();
+            
+            // ✨ EL CABLE NUEVO: Actualizamos la tabla en tiempo real ✨
+            if (typeof actualizarTablaMisiones === "function") {
+                actualizarTablaMisiones();
+            }
+
+            alert("¡Genial! 🌟 Acabas de ganar una estrella nueva.");
+        }
+
+        function leerYNavegar(palabra, ruta) {
+            let voz = new SpeechSynthesisUtterance(palabra);
+            voz.lang = 'es-CO'; 
+            window.speechSynthesis.speak(voz);
+
+            // Le mandamos el nombre de la palabra a la lista de chequeo
+            if (typeof ganarEstrella === "function") {
+                ganarEstrella("escucho_" + palabra); 
+            }
+
+            if (ruta && ruta !== '') {
+                setTimeout(function() {
+                    window.location.href = ruta;
+                }, 1000); 
+            }
+        }
+
+       window.addEventListener('load', function() {
+        actualizarPantallaEstrellas();
+        actualizarTablaMisiones();
+    });
+    </script>
+    <script>
+        // Función para dibujar la tabla de misiones
+        function actualizarTablaMisiones() {
+            // 1. El mapa de todas las misiones de tu plataforma (Asegúrate de que los IDs coincidan con los que pusiste en los botones)
+            const misionesTotales = [
+                { id: 'visito_letras', nombre: 'Aprender Letras' },
+                { id: 'visito_silabas', nombre: 'Unir Sílabas' },
+                { id: 'visito_palabras', nombre: 'Formar Palabras' },
+                { id: 'visito_cuentos', nombre: 'Leer Cuentos' },
+                { id: 'visito_juegos', nombre: 'Juegos Fonéticos' },
+                { id: 'escucho_Castillo', nombre: 'El Castillo Mágico' },
+                { id: 'escucho_Bosque', nombre: 'El Bosque Encantado' },
+                { id: 'escucho_Dragón', nombre: 'El Dragón Amigable' }
+            ];
+
+            // 2. Sacamos la lista secreta de lo que el niño ya hizo
+            let listaCompletadas = JSON.parse(localStorage.getItem('misionesCompletadas')) || [];
+
+            // 3. Preparamos las cajas de HTML
+            let cajaRealizadas = document.getElementById('lista-realizadas');
+            let cajaPendientes = document.getElementById('lista-pendientes');
+            
+            // Si no estamos en la página del progreso, no hacemos nada
+            if (!cajaRealizadas || !cajaPendientes) return;
+
+            // Limpiamos las cajas por si acaso
+            cajaRealizadas.innerHTML = '';
+            cajaPendientes.innerHTML = '';
+
+            // 4. Repartimos las misiones como si fueran cartas
+            misionesTotales.forEach(mision => {
+                let elementoLista = document.createElement('li');
+
+                if (listaCompletadas.includes(mision.id)) {
+                    // Si ya la hizo, va a la caja verde con una estrella
+                    elementoLista.innerHTML = '⭐ ' + mision.nombre;
+                    cajaRealizadas.appendChild(elementoLista);
+                } else {
+                    // Si le falta, va a la caja amarilla con un candado
+                    elementoLista.innerHTML = '🔒 <span style="opacity: 0.6;">' + mision.nombre + '</span>';
+                    cajaPendientes.appendChild(elementoLista);
+                }
+            });
+        }
+    </script>
+
+    
 </body>
 </html>

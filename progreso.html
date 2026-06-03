@@ -89,6 +89,26 @@
                 </div>
 
             </div>
+            <!-- TABLA DE MISIONES (Detalle de la ruta) -->
+<div style="margin: 30px auto; max-width: 800px; display: flex; gap: 20px; text-align: left; flex-wrap: wrap; justify-content: center;">
+    
+    <!-- Columna 1: Logradas -->
+    <div style="flex: 1; min-width: 250px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #bbf7d0;">
+        <h3 style="margin-top: 0; color: #166534; font-size: 1.2rem; text-align: center;">✅ Misiones Logradas</h3>
+        <ul id="lista-realizadas" style="list-style: none; padding: 0; margin: 0; color: #15803d; font-size: 1rem; font-weight: bold; line-height: 2;">
+            <!-- La IA llenará esto -->
+        </ul>
+    </div>
+
+    <!-- Columna 2: Pendientes -->
+    <div style="flex: 1; min-width: 250px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #fde68a;">
+        <h3 style="margin-top: 0; color: #b45309; font-size: 1.2rem; text-align: center;">⏳ Por Descubrir</h3>
+        <ul id="lista-pendientes" style="list-style: none; padding: 0; margin: 0; color: #b45309; font-size: 1rem; font-weight: bold; line-height: 2;">
+            <!-- La IA llenará esto -->
+        </ul>
+    </div>
+
+</div>
         </div>
         <div style="text-align: center; margin-top: 50px; margin-bottom: 40px;">
         <a href="ninos.html" style="background: linear-gradient(135deg, #a855f7, #c084fc); color: white; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-size: 1.3rem; font-weight: 800; box-shadow: 0 8px 15px rgba(168, 85, 247, 0.3); display: inline-block; transition: transform 0.2s;">
@@ -144,5 +164,50 @@
             }, 400); 
         };
     </script>
+
+    <script>
+    function actualizarTablaMisiones() {
+        // La lista maestra de misiones
+        const misionesTotales = [
+            { id: 'visito_letras', nombre: 'Aprender Letras' },
+            { id: 'visito_silabas', nombre: 'Unir Sílabas' },
+            { id: 'visito_palabras', nombre: 'Formar Palabras' },
+            { id: 'visito_cuentos', nombre: 'Leer Cuentos' },
+            { id: 'visito_juegos', nombre: 'Juegos Fonéticos' },
+            { id: 'escucho_Castillo', nombre: 'El Castillo Mágico' },
+            { id: 'escucho_Bosque', nombre: 'El Bosque Encantado' },
+            { id: 'escucho_Dragón', nombre: 'El Dragón Amigable' }
+        ];
+
+        // Leemos la memoria del navegador
+        let listaCompletadas = JSON.parse(localStorage.getItem('misionesCompletadas')) || [];
+        
+        let cajaRealizadas = document.getElementById('lista-realizadas');
+        let cajaPendientes = document.getElementById('lista-pendientes');
+        
+        if (!cajaRealizadas || !cajaPendientes) return;
+
+        // Limpiamos
+        cajaRealizadas.innerHTML = '';
+        cajaPendientes.innerHTML = '';
+
+        // Repartimos
+        misionesTotales.forEach(mision => {
+            let elementoLista = document.createElement('li');
+            if (listaCompletadas.includes(mision.id)) {
+                elementoLista.innerHTML = '⭐ ' + mision.nombre;
+                cajaRealizadas.appendChild(elementoLista);
+            } else {
+                elementoLista.innerHTML = '🔒 <span style="opacity: 0.6;">' + mision.nombre + '</span>';
+                cajaPendientes.appendChild(elementoLista);
+            }
+        });
+    }
+
+    // Le decimos a la página que ejecute esto al cargar
+    window.addEventListener('load', function() {
+        actualizarTablaMisiones();
+    });
+</script>
 </body>
 </html>

@@ -124,7 +124,16 @@
     </style>
 </head>
 <body>
-
+<!-- SALUDO PERSONALIZADO Y ALCANCÍA EN ACTIVIDADES -->
+<div style="text-align: center; margin: 20px 0; padding: 0 20px;">
+    <h2 style="color: #8b5cf6; font-size: 2rem; margin-bottom: 10px; margin-top: 0;">
+        ¡A jugar, <span id="nombre-actividades">Explorador</span>! <span id="avatar-actividades"></span>
+    </h2>
+    
+    <div style="background: #fbbf24; display: inline-block; padding: 8px 20px; border-radius: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <span style="font-size: 1.5rem; font-weight: 900; color: white;">Mis Estrellas: 🌟 <span id="contador-estrellas">0</span></span>
+    </div>
+</div>
     <header class="main-header">
         <div class="logo-container">
             <span class="logo-icon">📖</span>
@@ -254,8 +263,8 @@
             // Borramos la ruta para que no siga cargando de fondo
             marco.src = "";
         }
-        // ⚠️ PEGA TU LLAVE REAL AQUÍ
-        const mitad1 = "AIzaSyANct8QfgxL5Q7Q7KJaT";
+        // ⚠️ PEGA TU LLAVE REAL AQUÍ 
+       const mitad1 = "AIzaSyANct8QfgxL5Q7Q7KJaT";
 const mitad2 = "-lN8dnN1P9bbwQ";
 const GEMINI_API_KEY = mitad1 + mitad2;
 
@@ -333,6 +342,9 @@ const GEMINI_API_KEY = mitad1 + mitad2;
                 
                 if(progresoTotal > 100) { progresoTotal = 100; }
                 localStorage.setItem('progresoNiño', progresoTotal);
+
+                // ✨ ¡AQUÍ ESTÁ EL CABLE MAGICO! Le damos su estrella por terminar el quiz ✨
+    ganarEstrella();
 
                 // 🌟 REPRODUCTOR INCRUSTADO (YouTube)
                 let reproductorVideo = "";
@@ -415,6 +427,54 @@ const GEMINI_API_KEY = mitad1 + mitad2;
         window.avanzar = function() {
             indicePregunta++;
             mostrarPreguntaActual();
+        }
+    </script>
+
+    <script>
+        // Cuando la página carga, buscamos todo en la memoria
+        window.addEventListener('load', function() {
+            
+            // 1. BUSCAR EL NOMBRE Y EL AVATAR
+            let nombreGuardado = localStorage.getItem('nombreExplorador');
+            let avatarGuardado = localStorage.getItem('avatarExplorador');
+
+            if (nombreGuardado) {
+                // Ponemos la primera letra en mayúscula
+                let nombreMayuscula = nombreGuardado.charAt(0).toUpperCase() + nombreGuardado.slice(1);
+                
+                let textoNombre = document.getElementById('nombre-actividades');
+                let textoAvatar = document.getElementById('avatar-actividades');
+                
+                // Si encontramos el espacio en el HTML, pegamos el nombre
+                if (textoNombre) textoNombre.textContent = nombreMayuscula;
+                if (textoAvatar) textoAvatar.textContent = avatarGuardado;
+            }
+
+            // 2. BUSCAR LAS ESTRELLAS
+            let estrellasGuardadas = localStorage.getItem('estrellasExplorador');
+            if (!estrellasGuardadas) {
+                estrellasGuardadas = 0;
+            }
+            
+            let contador = document.getElementById('contador-estrellas');
+            if (contador) {
+                contador.textContent = estrellasGuardadas;
+            }
+        });
+
+        // 3. FUNCIÓN PARA GANAR ESTRELLAS (Para usar en los quizzes de esta página)
+        function ganarEstrella() {
+            let estrellasActuales = parseInt(localStorage.getItem('estrellasExplorador')) || 0;
+            estrellasActuales += 1;
+            localStorage.setItem('estrellasExplorador', estrellasActuales);
+            
+            // Actualizamos el número en pantalla inmediatamente
+            let contador = document.getElementById('contador-estrellas');
+            if (contador) {
+                contador.textContent = estrellasActuales;
+            }
+            
+            alert("¡Excelente trabajo! 🌟 Ganaste una estrella de lectura.");
         }
     </script>
 

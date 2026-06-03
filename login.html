@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso - Leo y Juega</title>
+    <style>
+        /* Estilos base para entorno infantil */
+        :root {
+            --color-fondo: #E3F2FD; /* Azul muy suave */
+            --color-tarjeta: #FFFFFF;
+            --color-texto: #333333;
+            --color-hover: #FFF9C4; /* Amarillo suave */
+            --borde-tarjeta: #64B5F6;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1565C0;
+            margin-bottom: 10px;
+        }
+
+        p.instruccion {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        /* Cuadrícula de Avatares */
+        .cuadricula-avatares {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
+        }
+
+        /* Tarjeta individual de cada niño */
+        .tarjeta-avatar {
+            background-color: var(--color-tarjeta);
+            border: 4px solid var(--borde-tarjeta);
+            border-radius: 20px;
+            width: 150px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .tarjeta-avatar:hover {
+            transform: scale(1.1);
+            background-color: var(--color-hover);
+            border-color: #FBC02D;
+        }
+
+        .avatar-img {
+            font-size: 5rem; /* Tamaño del emoji o imagen */
+            margin-bottom: 15px;
+        }
+
+        .nombre-estudiante {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1976D2;
+            margin: 0;
+        }
+
+        /* Mensaje de bienvenida oculto por defecto */
+        #mensaje-bienvenida {
+            display: none;
+            font-size: 2rem;
+            color: #2E7D32;
+            background-color: #C8E6C9;
+            padding: 20px 40px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 3px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-login">
+        <h1>¡Bienvenido a la Aventura!</h1>
+        <p class="instruccion">¿Quién eres hoy? Toca tu foto:</p>
+
+        <div class="cuadricula-avatares">
+            <!-- Estudiante 1 -->
+            <div class="tarjeta-avatar" onclick="iniciarSesion('Mateo', '🦁')">
+                <div class="avatar-img">🦁</div>
+                <h2 class="nombre-estudiante">Mateo</h2>
+            </div>
+            
+            <!-- Estudiante 2 -->
+            <div class="tarjeta-avatar" onclick="iniciarSesion('Sofía', '🦊')">
+                <div class="avatar-img">🦊</div>
+                <h2 class="nombre-estudiante">Sofía</h2>
+            </div>
+
+            <!-- Estudiante 3 -->
+            <div class="tarjeta-avatar" onclick="iniciarSesion('Lucas', '🐸')">
+                <div class="avatar-img">🐸</div>
+                <h2 class="nombre-estudiante">Lucas</h2>
+            </div>
+
+            <!-- Estudiante 4 -->
+            <div class="tarjeta-avatar" onclick="iniciarSesion('Emma', '🐼')">
+                <div class="avatar-img">🐼</div>
+                <h2 class="nombre-estudiante">Emma</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla que aparece al iniciar sesión -->
+    <div id="mensaje-bienvenida">
+        <span id="texto-bienvenida"></span><br>
+        <p style="font-size: 1.2rem; color: #555;">Redirigiendo a tus misiones...</p>
+    </div>
+
+    <script>
+        // Lógica de autenticación simulada
+        function iniciarSesion(nombre, emoji) {
+            // 1. Guardamos el nombre y el avatar en la memoria del navegador
+            localStorage.setItem('usuarioActual', nombre);
+            localStorage.setItem('avatarActual', emoji);
+
+            // 2. Ocultamos la pantalla de login
+            document.getElementById('pantalla-login').style.display = 'none';
+
+            // 3. Mostramos el mensaje de bienvenida personalizado
+            const mensajeDiv = document.getElementById('mensaje-bienvenida');
+            const textoBienvenida = document.getElementById('texto-bienvenida');
+            
+            textoBienvenida.innerText = '¡Hola ' + nombre + ' ' + emoji + '! Preparando tu misión...';
+            mensajeDiv.style.display = 'block';
+
+            // 4. Simulamos el salto a la página principal del EVA tras 2 segundos
+          // 4. Redirigir a la página principal del EVA tras 2 segundos
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 2000);
+        }
+
+        // Verificamos si alguien ya había iniciado sesión antes
+        window.onload = function() {
+            const usuarioGuardado = localStorage.getItem('usuarioActual');
+            if(usuarioGuardado) {
+                console.log("Sesión activa de: " + usuarioGuardado);
+                // Si quisieras que no tenga que volver a elegir su avatar, 
+                // podrías enviarlo directo a las misiones aquí.
+            }
+        }
+    </script>
+
+</body>
+</html>
