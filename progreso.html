@@ -118,6 +118,47 @@
         
     </div>
 
+    <section id="tienda-magica" style="margin-top: 40px; text-align: center; background: #f8fafc; padding: 30px; border-radius: 20px; border: 2px dashed #cbd5e1;">
+    <h2 style="color: #8b5cf6; font-size: 1.8rem; margin-top: 0;">🏪 La Tienda Mágica</h2>
+    <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 25px;">
+        Usa tus estrellas para adoptar un compañero que te acompañe en tus lecturas.
+    </p>
+    
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        
+        <!-- Mascota 1: El Perrito (Nivel Básico) -->
+        <div class="tarjeta-mascota" id="tarjeta-perrito" style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #e2e8f0; width: 220px;">
+            <div style="font-size: 4.5rem; margin-bottom: 10px;">🐶</div>
+            <h3 style="margin: 0 0 10px 0; color: #334155;">Perrito Lector</h3>
+            <p style="color: #f59e0b; font-weight: bold; font-size: 1.2rem; margin: 0 0 15px 0;">⭐ 5 Estrellas</p>
+            <button id="btn-comprar-perrito" onclick="comprarMascota('perrito', 5)" style="background: #10b981; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; transition: background 0.3s;">
+                🐾 Adoptar
+            </button>
+        </div>
+
+        <!-- Mascota 2: El Gatito (Nivel Medio) -->
+        <div class="tarjeta-mascota" id="tarjeta-gatito" style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #e2e8f0; width: 220px;">
+            <div style="font-size: 4.5rem; margin-bottom: 10px;">🐱</div>
+            <h3 style="margin: 0 0 10px 0; color: #334155;">Gatito Sabio</h3>
+            <p style="color: #f59e0b; font-weight: bold; font-size: 1.2rem; margin: 0 0 15px 0;">⭐ 10 Estrellas</p>
+            <button id="btn-comprar-gatito" onclick="comprarMascota('gatito', 10)" style="background: #10b981; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; transition: background 0.3s;">
+                🐾 Adoptar
+            </button>
+        </div>
+
+        <!-- Mascota 3: El Dragón (Nivel Avanzado) -->
+        <div class="tarjeta-mascota" id="tarjeta-dragon" style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #e2e8f0; width: 220px;">
+            <div style="font-size: 4.5rem; margin-bottom: 10px;">🐉</div>
+            <h3 style="margin: 0 0 10px 0; color: #334155;">Dragón Guardián</h3>
+            <p style="color: #f59e0b; font-weight: bold; font-size: 1.2rem; margin: 0 0 15px 0;">⭐ 15 Estrellas</p>
+            <button id="btn-comprar-dragon" onclick="comprarMascota('dragon', 15)" style="background: #10b981; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; transition: background 0.3s;">
+                🐾 Adoptar
+            </button>
+        </div>
+
+    </div>
+</section>
+
     <script>
         // Esperamos a que la página cargue para hacer la animación
         window.onload = function() {
@@ -163,6 +204,69 @@
 
             }, 400); 
         };
+
+        // 1. FUNCIÓN PARA COMPRAR/ADOPTAR LA MASCOTA
+function comprarMascota(idMascota, costo) {
+    // Leemos cuántas estrellas tiene el niño
+    let estrellas = parseInt(localStorage.getItem('estrellasExplorador')) || 0;
+    
+    // Leemos si ya tiene una mascota
+    let mascotaActual = localStorage.getItem('mascotaAdoptada');
+
+    // Verificamos si ya adoptó exactamente a esta mascota
+    if (mascotaActual === idMascota) {
+        alert("¡Ya adoptaste a este amiguito! Está muy feliz contigo.");
+        return;
+    }
+
+    // Verificamos si tiene el dinero (estrellas) suficiente
+    if (estrellas >= costo) {
+        // Descontamos el costo matemático
+        estrellas -= costo;
+        localStorage.setItem('estrellasExplorador', estrellas);
+        
+        // Guardamos la nueva mascota en la memoria
+        localStorage.setItem('mascotaAdoptada', idMascota);
+        
+        // Actualizamos los números en la pantalla para que vea que "pagó"
+        if(typeof actualizarPantallaEstrellas === 'function') {
+            actualizarPantallaEstrellas();
+        }
+        
+        // Actualizamos los botones de la tienda
+        actualizarBotonesTienda();
+        
+        alert("¡Felicidades! 🎉 Has adoptado un nuevo compañero. ¡Cuídalo mucho!");
+    } else {
+        // Si no le alcanza, le decimos cuántas le faltan para motivarlo
+        let faltan = costo - estrellas;
+        alert("¡Oh no! Te faltan " + faltan + " estrellas. ¡Sigue leyendo y explorando para ganar más!");
+    }
+}
+
+// 2. FUNCIÓN PARA QUE LA TIENDA RECUERDE QUÉ COMPRÓ
+function actualizarBotonesTienda() {
+    let mascotaActual = localStorage.getItem('mascotaAdoptada');
+    
+    // Si ya es dueño de uno, el botón cambia de color y de texto
+    if(mascotaActual === 'perrito') {
+        let btn = document.getElementById('btn-comprar-perrito');
+        if(btn) { btn.innerText = "¡Es tuyo! 💖"; btn.style.background = "#94a3b8"; btn.style.cursor = "default"; }
+    }
+    if(mascotaActual === 'gatito') {
+        let btn = document.getElementById('btn-comprar-gatito');
+        if(btn) { btn.innerText = "¡Es tuyo! 💖"; btn.style.background = "#94a3b8"; btn.style.cursor = "default"; }
+    }
+    if(mascotaActual === 'dragon') {
+        let btn = document.getElementById('btn-comprar-dragon');
+        if(btn) { btn.innerText = "¡Es tuyo! 💖"; btn.style.background = "#94a3b8"; btn.style.cursor = "default"; }
+    }
+}
+
+// 3. CONECTAR AL INICIO
+window.addEventListener('load', function() {
+    actualizarBotonesTienda();
+});
     </script>
 
     <script>
